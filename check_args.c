@@ -6,16 +6,17 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 21:45:20 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/06/25 09:54:28 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/06/26 06:09:45 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stdlib.h>
 
 size_t	ft_strlen(const char *s)
 {
 	size_t	len;
-
+	
 	len = 0;
 	while (s[len])
 		++len;
@@ -60,6 +61,7 @@ int	error_args(int ac)
 			"(optional argumen).\n");
 		return (EXIT_FAILURE);
 	}
+	return (EXIT_SUCCESS);
 }
 
 int	ft_check_args(t_switch *context, int ac, char **av)
@@ -78,8 +80,10 @@ int	ft_check_args(t_switch *context, int ac, char **av)
 	return (0);
 }
 
-size_t	ft_time_ms(struct timeval *time)
+size_t	ft_get_time(void)
 {
-	gettimeofday(time, NULL);
-	return ((time->tv_sec * 1000) + (time->tv_usec / 1000));
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
