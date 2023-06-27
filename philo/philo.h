@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:58:33 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/06/26 06:50:14 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:47:15 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,41 +24,44 @@
 
 typedef struct s_switch
 {
-	int				n_philo;
-	int				t_die;
-	int				t_eat;
-	int				t_sleep;
-	int				n_times;
-	int				died;
-	int start_time;
-	struct s_philo	*philo;
+	size_t			n_philo;
+	size_t			t_die;
+	size_t			t_eat;
+	size_t			t_sleep;
+	size_t			n_times;
+	size_t			died;
+	pthread_mutex_t	check;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	print;
-	pthread_mutex_t	eating;
-	pthread_mutex_t	sleeping;
-	pthread_mutex_t	death;
+	struct s_philo	*philo;
 }	t_switch;
 
 typedef struct s_philo
 {
-	int				id;
-	int				n_philo;
-	int				t_die;
-	int				t_eat;
-	int				t_sleep;
-	int				n_times;
+	size_t			id;
+	size_t			start;
+	size_t			last_meal;
+	size_t			n_philo;
+	size_t			t_die;
+	size_t			t_eat;
+	size_t			t_sleep;
+	size_t			n_times;
 	pthread_t		thread;
-	t_switch		*context;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*r_fork;
+	struct s_switch	*context;
 }	t_philo;
 
-void	*routine(void *arg);
-int		is_dead(t_switch *context, size_t id, size_t *last_meal);
-int		ft_sleeping(t_switch *context, size_t id, size_t *last_meal);
-int		ft_eating(t_switch *context, size_t id, size_t *last_meal);
-size_t	ft_strlen(const char *s);
-long	ft_atol(const char *s);
-int		error_args(int ac);
 int		ft_check_args(t_switch *context, int ac, char **av);
+int		ft_set_data(t_switch *context, int ac, char **av);
+void	ft_init_data(t_switch *context);
+int		ft_sleeping(t_philo *philo);
+int		ft_thinking(t_philo *philo);
+int		ft_eating(t_philo *philo);
+size_t	ft_strlen(const char *s);
+int		is_dead(t_philo *philo);
+size_t	ft_atol(const char *s);
+void	*routine(void *arg);
+int		error_args(int ac);
 size_t	ft_get_time(void);
 
 #endif
