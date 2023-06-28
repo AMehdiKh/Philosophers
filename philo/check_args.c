@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 21:45:20 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/06/27 12:35:12 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/06/28 23:58:08 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ft_check_args(t_switch *context, int ac, char **av)
 	context->t_die = ft_atol(av[2]);
 	context->t_eat = ft_atol(av[3]);
 	context->t_sleep = ft_atol(av[4]);
+	context->total_eat = 0;
 	if (av[5])
 	{
 		context->n_times = ft_atol(av[5]);

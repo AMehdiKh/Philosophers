@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:27:38 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/06/27 13:01:20 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/06/28 14:32:51 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	ft_set_data(t_switch *context, int ac, char **av)
 	while (++i < (int)context->n_philo)
 		pthread_mutex_init(&context->forks[i], NULL);
 	pthread_mutex_init(&context->check, NULL);
+	pthread_mutex_init(&context->print, NULL);
+	ft_init_data(context);
 	ft_init_data(context);
 	return (EXIT_SUCCESS);
 }
@@ -39,6 +41,7 @@ void	ft_init_data(t_switch *context)
 	i = -1;
 	while (++i < (int)context->n_philo)
 	{
+		context->philo[i].life = 1;
 		context->philo[i].id = i + 1;
 		context->philo[i].n_philo = context->n_philo;
 		context->philo[i].t_die = context->t_die;
@@ -51,23 +54,23 @@ void	ft_init_data(t_switch *context)
 	}
 }
 
-int	is_dead(t_philo *philo)
-{
-	size_t	death_time;
+// int	is_dead(t_philo *philo)
+// {
+// 	size_t	death_time;
 
-	death_time = ft_get_time();
-	if (death_time >= (philo->last_meal + philo->t_die))
-	{
-		pthread_mutex_lock(&philo->context->check);
-		if (!philo->context->died)
-		{
-			philo->context->died = 1;
-			printf("%zu %zu died\n", death_time - philo->start, philo->id);
-		}
-		return (pthread_mutex_unlock(&philo->context->check), EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
+// 	death_time = ft_get_time();
+// 	if (death_time - philo->last_meal >= philo->t_die)
+// 	{
+// 		pthread_mutex_lock(&philo->context->check);
+// 		if (!philo->context->died)
+// 		{
+// 			philo->context->died = 1;
+// 			printf("%zu %zu died\n", death_time - philo->start, philo->id);
+// 		}
+// 		return (pthread_mutex_unlock(&philo->context->check), EXIT_FAILURE);
+// 	}
+// 	return (EXIT_SUCCESS);
+// }
 
 size_t	ft_get_time(void)
 {

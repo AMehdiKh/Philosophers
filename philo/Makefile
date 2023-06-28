@@ -6,7 +6,7 @@
 #    By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/27 12:48:23 by ael-khel          #+#    #+#              #
-#    Updated: 2023/06/27 13:03:05 by ael-khel         ###   ########.fr        #
+#    Updated: 2023/06/28 23:42:32 by ael-khel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,8 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 ###############################################################################################################
-DIR = philo
 
-OBJ_DIR = philo/objs
+OBJ_DIR = objs
 
 FILES = philo init check_args
 
@@ -34,7 +33,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(OBJS) -o $@
 
-$(OBJ_DIR)/%.o: $(DIR)/%.c
+$(OBJ_DIR)/%.o: %.c philo.h
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -lpthread -c $< -o $@
 
