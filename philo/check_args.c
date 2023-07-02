@@ -6,34 +6,13 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 21:45:20 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/06/28 23:58:08 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/07/02 12:16:15 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_check_args(t_switch *context, int ac, char **av)
-{
-	if (error_args(ac))
-		return (EXIT_FAILURE);
-	context->n_philo = ft_atol(av[1]);
-	context->t_die = ft_atol(av[2]);
-	context->t_eat = ft_atol(av[3]);
-	context->t_sleep = ft_atol(av[4]);
-	context->total_eat = 0;
-	if (av[5])
-	{
-		context->n_times = ft_atol(av[5]);
-		if (context->n_times == 0)
-			return (EXIT_FAILURE);
-	}
-	if (context->n_philo == 0 || context->t_die == 0 || context->t_eat == 0
-		|| context->t_sleep == 0)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
-int	error_args(int ac)
+int	ft_error_args(int ac)
 {
 	if (ac < 5 || ac > 6)
 	{
@@ -58,20 +37,38 @@ size_t	ft_atol(const char *s)
 		++s;
 	if ((*s == '+' || *s == '-'))
 		if (*s++ == '-')
-			return (printf("Error: Only positive values accepted\n"), 0);
+			return (printf("Error: Only positive values accepted.\n"), 0);
 	while (*s >= '0' && *s <= '9')
 	{
 		result = (result * 10) + (*s++ - 48);
 		if (result > INT_MAX)
-			return (printf("Error: The number is too much big\n"), 0);
+			return (printf("Error: The number is too much big.\n"), 0);
 	}
 	while (*s <= 32 && *s)
 		++s;
 	if (*s)
-		return (printf("Error: Only numbers accepted\n"), 0);
+		return (printf("Error: Only numbers accepted.\n"), 0);
 	if (!result)
-		return (printf("Error: 0 value is not accepted\n"), 0);
-	if (!result)
-		return (printf("Error: 0 value is not accepted\n"), 0);
+		return (printf("Error: '0' is not accepted.\n"), 0);
 	return (result);
+}
+
+int	ft_check_args(t_switch *context, int ac, char **av)
+{
+	if (ft_error_args(ac))
+		return (EXIT_FAILURE);
+	context->n_philo = ft_atol(av[1]);
+	context->t_die = ft_atol(av[2]);
+	context->t_eat = ft_atol(av[3]);
+	context->t_sleep = ft_atol(av[4]);
+	if (context->n_philo == 0 || context->t_die == 0 || context->t_eat == 0
+		|| context->t_sleep == 0)
+		return (EXIT_FAILURE);
+	if (av[5])
+	{
+		context->n_times = ft_atol(av[5]);
+		if (context->n_times == 0)
+			return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }

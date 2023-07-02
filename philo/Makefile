@@ -6,36 +6,41 @@
 #    By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/27 12:48:23 by ael-khel          #+#    #+#              #
-#    Updated: 2023/06/28 23:42:32 by ael-khel         ###   ########.fr        #
+#    Updated: 2023/07/02 12:12:34 by ael-khel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ###############################################################################################################
+
 NAME = philo
+
 ###############################################################################################################
+
 CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
+
 ###############################################################################################################
 
 OBJ_DIR = objs
 
-FILES = philo init check_args
+FILES = main check_args set_data routine utils
 
 SRCS = $(addsuffix .c,$(FILES))
 
 OBJS = ${SRCS:%.c=$(OBJ_DIR)/%.o}
 
-##############################################################################################################
+###############################################################################################################
+
 .PHONY: clean
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $@
+	$(CC) $(OBJS) -fsanitize=address -static-libasan -o $@
 
 $(OBJ_DIR)/%.o: %.c philo.h
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -lpthread -c $< -o $@
+	$(CC) $(CFLAGS) -lpthread -fsanitize=address -g -c $< -o $@
 
 clean:
 	$(RM) -r $(OBJ_DIR)
@@ -44,3 +49,8 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+###############################################################################################################
+
+# $(CC) $(OBJS) -fsanitize=thread -static-libasan -o $@
+# $(CC) $(CFLAGS) -lpthread -fsanitize=thread -g -c $< -o $@
