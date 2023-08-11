@@ -6,7 +6,7 @@
 #    By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/27 12:48:23 by ael-khel          #+#    #+#              #
-#    Updated: 2023/07/02 12:12:34 by ael-khel         ###   ########.fr        #
+#    Updated: 2023/08/11 23:18:50 by ael-khel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,11 +36,11 @@ OBJS = ${SRCS:%.c=$(OBJ_DIR)/%.o}
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -fsanitize=address -static-libasan -o $@
+	$(CC) $(OBJS) -o $@
 
 $(OBJ_DIR)/%.o: %.c philo.h
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -lpthread -fsanitize=address -g -c $< -o $@
+	$(CC) $(CFLAGS) -lpthread -c $< -o $@
 
 clean:
 	$(RM) -r $(OBJ_DIR)

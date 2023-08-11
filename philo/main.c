@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 09:44:43 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/07/02 18:03:00 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/08/11 23:27:06 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 int	ft_dead_philo(t_switch *context, size_t i)
 {
-	size_t	death_time;
+	size_t	current_time;
 	size_t	last_meal;
 
 	pthread_mutex_lock(&context->meal);
-	death_time = ft_get_time();
+	current_time = ft_get_time();
 	last_meal = context->philo[i].last_meal;
-	if (context->philo[i].life && death_time - last_meal >= context->t_die)
+	if (context->philo[i].life && (current_time - last_meal) >= context->t_die)
 	{
 		pthread_mutex_unlock(&context->meal);
 		pthread_mutex_lock(&context->print);
 		context->died = 1;
-		printf("%zu %zu died\n", death_time - context->philo[i].start,
+		printf("%zu %zu died\n", current_time - context->philo[i].start,
 			context->philo[i].id);
 		pthread_mutex_unlock(&context->print);
 		return (EXIT_FAILURE);
@@ -35,12 +35,12 @@ int	ft_dead_philo(t_switch *context, size_t i)
 
 void	ft_check_dead(t_switch *context)
 {
-	size_t	i;
+	size_t	id;
 
-	i = 0;
+	id = 0;
 	while (1)
 	{
-		if (ft_dead_philo(context, i))
+		if (ft_dead_philo(context, id))
 			return ;
 		if (context->n_philo)
 		{
@@ -52,7 +52,7 @@ void	ft_check_dead(t_switch *context)
 			}
 			pthread_mutex_unlock(&context->meal);
 		}
-		i = (i + 1) % context->n_philo;
+		id = (id + 1) % context->n_philo;
 		usleep(500);
 	}
 }
@@ -93,7 +93,7 @@ int	main(int ac, char **av)
 	if (!context)
 		return (EXIT_FAILURE);
 	if (ft_check_args(memset(context, 0, sizeof(t_switch)), ac, av))
-		return (free(context), EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	if (ft_set_data(context))
 		return (EXIT_FAILURE);
 	i = -1;

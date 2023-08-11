@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 19:25:46 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/07/02 18:03:25 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:31:37 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,28 @@ size_t	ft_get_time(void)
 
 	gettimeofday(&time, NULL);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
+int	ft_usleep(t_philo *philo, size_t last_action,
+	size_t current_action, int eating)
+{
+	while ((ft_get_time() - last_action) < current_action)
+	{
+		if ((ft_get_time() - philo->last_meal) >= philo->t_die)
+		{
+			pthread_mutex_lock(&philo->context->print);
+			philo->context->died = 1;
+			pthread_mutex_unlock(&philo->context->print);
+			if (eating)
+				return (pthread_mutex_unlock(philo->r_fork),
+					pthread_mutex_unlock(philo->l_fork), EXIT_FAILURE);
+			return (EXIT_FAILURE);
+		}
+	}
+	if (eating)
+		return (pthread_mutex_unlock(philo->r_fork),
+			pthread_mutex_unlock(philo->l_fork), EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 void	ft_destroy_data(t_switch *context)

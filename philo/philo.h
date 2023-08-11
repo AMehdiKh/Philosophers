@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 18:58:33 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/07/02 18:03:15 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:32:40 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_philo
 }	t_philo;
 
 int		ft_check_args(t_switch *context, int ac, char **av);
+int		ft_usleep(t_philo *philo, size_t last_action,
+			size_t current_action, int eating);
 int		ft_dead_philo(t_switch *context, size_t i);
 int		ft_eat_times(t_philo *philo, size_t i);
 int		ft_print(t_philo *philo, char *status);
