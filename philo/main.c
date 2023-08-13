@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 09:44:43 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/08/11 23:27:06 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/08/13 21:09:59 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_check_dead(t_switch *context)
 			pthread_mutex_unlock(&context->meal);
 		}
 		id = (id + 1) % context->n_philo;
-		usleep(500);
+		usleep(50);
 	}
 }
 
