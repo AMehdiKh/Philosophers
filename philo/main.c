@@ -6,13 +6,13 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 09:44:43 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/08/13 21:09:59 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/08/16 06:53:12 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_dead_philo(t_switch *context, size_t i)
+int	ft_dead_philo(t_info *context, size_t i)
 {
 	size_t	current_time;
 	size_t	last_meal;
@@ -23,17 +23,17 @@ int	ft_dead_philo(t_switch *context, size_t i)
 	if (context->philo[i].life && (current_time - last_meal) >= context->t_die)
 	{
 		pthread_mutex_unlock(&context->meal);
-		pthread_mutex_lock(&context->print);
-		context->died = 1;
-		printf("%zu %zu died\n", current_time - context->philo[i].start,
+		pthread_mutex_lock(&context->dead);
+		context->death = 1;
+		printf("%zu %zu death\n", current_time - context->philo[i].start,
 			context->philo[i].id);
-		pthread_mutex_unlock(&context->print);
+		pthread_mutex_unlock(&context->dead);
 		return (EXIT_FAILURE);
 	}
 	return (pthread_mutex_unlock(&context->meal), EXIT_SUCCESS);
 }
 
-void	ft_check_dead(t_switch *context)
+void	ft_check_dead(t_info *context)
 {
 	size_t	id;
 
@@ -86,13 +86,13 @@ void	*routine(void *arg)
 
 int	main(int ac, char **av)
 {
-	t_switch	*context;
-	int			i;
+	t_info	*context;
+	int		i;
 
-	context = malloc(sizeof(t_switch));
+	context = malloc(sizeof(t_info));
 	if (!context)
 		return (EXIT_FAILURE);
-	if (ft_check_args(memset(context, 0, sizeof(t_switch)), ac, av))
+	if (ft_check_args(memset(context, 0, sizeof(t_info)), ac, av))
 		return (EXIT_FAILURE);
 	if (ft_set_data(context))
 		return (EXIT_FAILURE);

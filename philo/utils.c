@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 19:25:46 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/08/13 18:10:01 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/08/16 06:35:32 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	ft_print(t_philo *philo, char *status)
 {
-	pthread_mutex_lock(&philo->context->print);
-	if (philo->context->died)
-		return (pthread_mutex_unlock(&philo->context->print), EXIT_FAILURE);
+	pthread_mutex_lock(&philo->context->dead);
+	if (philo->context->death)
+		return (pthread_mutex_unlock(&philo->context->dead), EXIT_FAILURE);
 	printf("%zu %zu %s\n", ft_get_time() - philo->start, philo->id, status);
-	return (pthread_mutex_unlock(&philo->context->print), EXIT_SUCCESS);
+	return (pthread_mutex_unlock(&philo->context->dead), EXIT_SUCCESS);
 }
 
 size_t	ft_get_time(void)
@@ -36,9 +36,9 @@ int	ft_usleep(t_philo *philo, size_t last_action,
 	{
 		if ((ft_get_time() - philo->last_meal) >= philo->t_die)
 		{
-			pthread_mutex_lock(&philo->context->print);
-			philo->context->died = 1;
-			pthread_mutex_unlock(&philo->context->print);
+			pthread_mutex_lock(&philo->context->dead);
+			philo->context->death = 1;
+			pthread_mutex_unlock(&philo->context->dead);
 			if (eating)
 				return (pthread_mutex_unlock(philo->r_fork),
 					pthread_mutex_unlock(philo->l_fork), EXIT_FAILURE);
@@ -51,7 +51,7 @@ int	ft_usleep(t_philo *philo, size_t last_action,
 	return (EXIT_SUCCESS);
 }
 
-void	ft_destroy_data(t_switch *context)
+void	ft_destroy_data(t_info *context)
 {
 	int	i;
 
@@ -62,7 +62,7 @@ void	ft_destroy_data(t_switch *context)
 	while (++i < (int)context->n_philo)
 		pthread_mutex_destroy(&context->forks[i]);
 	pthread_mutex_destroy(&context->meal);
-	pthread_mutex_destroy(&context->print);
+	pthread_mutex_destroy(&context->dead);
 	free(context->forks);
 	free(context->philo);
 	free(context);

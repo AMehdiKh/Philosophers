@@ -6,13 +6,13 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 12:27:38 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/07/02 18:02:41 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/08/16 06:34:15 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_init_data(t_switch *context)
+void	ft_init_data(t_info *context)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ void	ft_init_data(t_switch *context)
 	}
 }
 
-int	ft_set_data(t_switch *context)
+int	ft_set_data(t_info *context)
 {
 	int	i;
 
@@ -46,7 +46,7 @@ int	ft_set_data(t_switch *context)
 	while (++i < (int)context->n_philo)
 		pthread_mutex_init(&context->forks[i], NULL);
 	pthread_mutex_init(&context->meal, NULL);
-	pthread_mutex_init(&context->print, NULL);
+	pthread_mutex_init(&context->dead, NULL);
 	ft_init_data(context);
 	return (EXIT_SUCCESS);
 }

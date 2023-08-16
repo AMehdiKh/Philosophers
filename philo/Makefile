@@ -6,7 +6,7 @@
 #    By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/27 12:48:23 by ael-khel          #+#    #+#              #
-#    Updated: 2023/08/13 18:09:23 by ael-khel         ###   ########.fr        #
+#    Updated: 2023/08/16 06:56:54 by ael-khel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,3 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
-###############################################################################################################
-# $(CC) $(OBJS) -fsanitize=thread -static-libasan -o $@
-# $(CC) $(CFLAGS) -lpthread -fsanitize=thread -g -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: ael-khel <ael-khel@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 21:45:20 by ael-khel          #+#    #+#             */
-/*   Updated: 2023/08/11 19:50:58 by ael-khel         ###   ########.fr       */
+/*   Updated: 2023/08/16 05:38:12 by ael-khel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ size_t	ft_atol(const char *s)
 	return (result);
 }
 
-int	ft_check_args(t_switch *context, int ac, char **av)
+int	ft_check_args(t_info *context, int ac, char **av)
 {
 	if (ft_error_args(ac))
 		return (EXIT_FAILURE);
